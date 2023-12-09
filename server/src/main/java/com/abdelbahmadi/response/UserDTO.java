@@ -1,28 +1,18 @@
-package com.abdelbahmadi.models;
+package com.abdelbahmadi.response;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
-@Builder
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+public class UserDTO {
     private  Integer id;
-    @NotBlank(message = "Invalid Name: Empty name")
-    @NotNull(message = "Invalid Name: Name is NULL")
+    @NotBlank(message = "Invalid firstName: Empty firstName")
+    @NotNull(message = "Invalid firstName: firstName is NULL")
     private  String firstName;
     @NotBlank(message = "Invalid lastName: Empty lastName")
     @NotNull(message = "Invalid lastName: lastName is NULL")
@@ -35,11 +25,4 @@ public class User {
     @NotBlank(message = "Invalid lastName: Empty lastName")
     @NotNull(message = "Invalid lastName: lastName is NULL")
     private  String gender;
-    @JsonIgnore
-    @ManyToMany
-    private Set<User> followers = new HashSet<>();
-    @JsonIgnore
-    @ManyToMany
-    private Set<User> followings = new HashSet<>();
-
 }

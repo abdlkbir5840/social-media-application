@@ -1,11 +1,13 @@
 package com.abdelbahmadi.controller;
 
-import com.abdelbahmadi.models.User;
+import com.abdelbahmadi.exception.EntityNotFoundException;
+import com.abdelbahmadi.response.UserDTO;
 import com.abdelbahmadi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("/users")
 @RestController
@@ -13,38 +15,43 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     @GetMapping
-    public List<User> getUsers(){
+    public List<UserDTO> getUsers(){
         return userService.getAll();
     }
-
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable  Integer id) throws Exception{
+    public UserDTO getUserById(@PathVariable  Integer id)  {
        return userService.findUserById(id);
     }
     @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable  String email) throws Exception{
+    public UserDTO getUserByEmail(@PathVariable  String email) {
         return userService.findUserByEmail(email);
     }
     @PostMapping
-    public  User createUser(@RequestBody User user){
-
-        return userService.registerUser(user);
+    public  UserDTO createUser(@RequestBody UserDTO userDTO){
+        return userService.registerUser(userDTO);
     }
     @PutMapping("/{id}")
-    public  User updateUser(@RequestBody User user, @PathVariable  Integer id)throws  Exception {
-
-        return userService.updateUser(user, id);
+    public  UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable  Integer id) {
+        return userService.updateUser(userDTO, id);
     }
     @PostMapping("/follow/{followerId}/{followedId}")
-    public User followUser(@PathVariable Integer followerId, @PathVariable Integer followedId) throws  Exception{
+    public UserDTO followUser(@PathVariable Integer followerId, @PathVariable Integer followedId) {
         return userService.followUser(followerId, followedId);
     }
-    @GetMapping("/search/{query}")
-    public List<User> searchUsers(@PathVariable String query) {
+    @GetMapping("/search")
+    public List<UserDTO> searchUsers(@RequestParam("query") String query) {
         return userService.searchUser(query);
     }
+    @GetMapping("/followers/{id}")
+    public Set<UserDTO> getFollowers(@PathVariable Integer id)   {
+        return userService.findFollowers(id);
+    }
+    @GetMapping("/followings/{id}")
+    public Set<UserDTO> getFollowings(@PathVariable Integer id)   {
+     return userService.findFollowings(id);
+    }
     @DeleteMapping("/{id}")
-    public  String deleteUser(@PathVariable Integer id) {
-        return "user deleted with success";
+    public  void deleteUser(@PathVariable Integer id)  {
+        userService.removeUser(id);
     }
-    }
+}

@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     public Optional< User> findUserByEmail(String email);
-
     @Query("select u from User u where  u.firstName like  %:query% OR u.lastName like  %:query% OR u.email like  %:query%")
     List<User> searchUser(@Param("query") String query);
 }
