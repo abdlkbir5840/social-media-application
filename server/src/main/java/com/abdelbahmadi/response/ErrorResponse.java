@@ -15,14 +15,12 @@ public class ErrorResponse {
     private HttpStatus httpStatus;
     private String stackTrace;
     private LocalDateTime timestamp;
-
     public ErrorResponse(String message, HttpStatus httpStatus, Throwable  throwable, LocalDateTime timestamp) {
         this.message = message;
         this.httpStatus = httpStatus;
         this.stackTrace = this.getStackTraceAsString(throwable);
         this.timestamp = timestamp;
     }
-
     private String getStackTraceAsString(Throwable throwable) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);

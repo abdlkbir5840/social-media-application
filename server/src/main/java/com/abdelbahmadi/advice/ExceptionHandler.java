@@ -1,5 +1,6 @@
 package com.abdelbahmadi.advice;
 
+import com.abdelbahmadi.exception.AccessDeniedException;
 import com.abdelbahmadi.exception.EntityAlreadyExistException;
 import com.abdelbahmadi.exception.EntityNotFoundException;
 import com.abdelbahmadi.exception.IllegalArgumentException;
@@ -49,6 +50,12 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public  ResponseEntity<ErrorResponse> HnadleIllegalArgumentException(IllegalArgumentException ex){
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,ex,LocalDateTime.now(ZoneId.systemDefault()));
+        return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public  ResponseEntity<ErrorResponse> HnadleIllegalArgumentException(AccessDeniedException ex){
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,ex,LocalDateTime.now(ZoneId.systemDefault()));
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
     }
