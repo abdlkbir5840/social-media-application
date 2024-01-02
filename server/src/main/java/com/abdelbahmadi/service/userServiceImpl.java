@@ -1,14 +1,19 @@
 package com.abdelbahmadi.service;
 
+import com.abdelbahmadi.authentication.JwtProvider;
 import com.abdelbahmadi.exception.EntityAlreadyExistException;
 import com.abdelbahmadi.exception.EntityNotFoundException;
 import com.abdelbahmadi.exception.IllegalArgumentException;
+import com.abdelbahmadi.models.Follows;
 import com.abdelbahmadi.models.User;
+import com.abdelbahmadi.repository.FollowsRepository;
 import com.abdelbahmadi.repository.UserRepository;
+import com.abdelbahmadi.response.FollowsDTO;
 import com.abdelbahmadi.response.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,14 +21,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class userServiceImpl implements  UserService{
     private final UserRepository userRepository;
+    private final FollowsRepository  followsRepository;
     private final ModelMapper modelMapper;
     @Override
     public List<UserDTO> getAll() {
         List<User> users = userRepository.findAll();
-        List<UserDTO> userDTOS = users.stream().map(user->modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+        List<UserDTO> userDTOS = users.stream().map(user->
+                modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
         return userDTOS;
     }
     @Override
@@ -51,63 +59,66 @@ public class userServiceImpl implements  UserService{
     }
     @Override
     public UserDTO updateUser(UserDTO userDTO, Integer id) throws EntityNotFoundException {
-        UserDTO oldeUser = this.findUserById(id);
+        User  oldeUser = userRepository.findById(id).orElseThrow(()
+                ->new EntityNotFoundException("User with ID "+id+" not found"));
         if(userDTO.getFirstName()!=null){
             oldeUser.setFirstName(userDTO.getFirstName());
         }
         if(userDTO.getLastName()!=null){
             oldeUser.setLastName(userDTO.getLastName());
         }
-        if(userDTO.getEmail()!=null){
-            oldeUser.setEmail(userDTO.getEmail());
-        }
-        if(userDTO.getPassword()!=null){
-            oldeUser.setPassword(userDTO.getPassword());
-        }
         if(userDTO.getGender()!=null){
             oldeUser.setGender(userDTO.getGender());
         }
-        User updatedUser = userRepository.save(modelMapper.map(oldeUser,User.class));
+        User updatedUser = userRepository.save(oldeUser);
         return modelMapper.map(updatedUser, UserDTO.class);
     }
     @Override
     public UserDTO followUser(Integer followerId, Integer followedId) throws EntityNotFoundException, IllegalArgumentException {
-        if(followerId == followedId){
-            throw  new IllegalArgumentException("Follower ID cannot be equal to Followed ID");
+        if (followerId.equals(followedId)) {
+            throw new IllegalArgumentException("Follower ID cannot be equal to Followed ID");
         }
-        User follower = userRepository.findById(followerId).orElseThrow(()
-                -> new EntityNotFoundException("User with ID "+followerId+" not found"));
-        User  followed = userRepository.findById(followedId).orElseThrow(()
-                -> new EntityNotFoundException("User with ID "+followedId+" not found"));
-        if (isAlreadyFollowing(follower, followed)) {
-            follower.getFollowings().remove(followed);
-            followed.getFollowers().remove(follower);
-        }else{
-            follower.getFollowings().add(followed);
-            followed.getFollowers().add(follower);
+        User follower = userRepository.findById(followerId)
+                .orElseThrow(() -> new EntityNotFoundException("User with ID " + followerId + " not found"));
+        User followed = userRepository.findById(followedId)
+                .orElseThrow(() -> new EntityNotFoundException("User with ID " + followedId + " not found"));
+        Optional<Follows> existingFollow = followsRepository.findByFollowerAndFollowing(follower, followed);
+        if (existingFollow.isPresent()) {
+            System.out.println("from existingFollow");
+            followsRepository.delete(existingFollow.get());
+        } else {
+            Follows follows = new Follows();
+            follows.setFollower(follower);
+            follows.setFollowing(followed);
+            follows.setStatus("Pending");
+            followsRepository.save(follows);
         }
-        userRepository.save(follower);
-        userRepository.save(followed);
         return modelMapper.map(follower, UserDTO.class);
     }
     @Override
-    public Set<UserDTO> findFollowers(Integer id) throws EntityNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("User with ID "+id+" not found"));
-        Set<UserDTO> followers = user.getFollowers().stream().map(follower
-                -> modelMapper.map(follower, UserDTO.class)).collect(Collectors.toSet());
-        return followers;
+    public Set<FollowsDTO> findFollowers(Integer userId) throws EntityNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+
+        return user.getFollowers().stream()
+                .map(follower -> {
+                    FollowsDTO dto = modelMapper.map(follower.getFollower(), FollowsDTO.class);
+                    dto.setStatus(follower.getStatus());
+                    return dto;
+                })
+                .collect(Collectors.toSet());
     }
     @Override
-    public Set<UserDTO>  findFollowings(Integer id) throws EntityNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Utilisateur non trouvé avec l'ID : " + id));
-        Set<UserDTO> followings = user.getFollowings().stream().map(following
-                -> modelMapper.map(following, UserDTO.class)).collect(Collectors.toSet());
-        return followings;
-    }
-    private boolean isAlreadyFollowing(User follower, User followed) {
-        return follower.getFollowings().contains(followed);
+    public Set<FollowsDTO> findFollowings(Integer userId) throws EntityNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+        return user.getFollowing().stream()
+                .map(following -> {
+                    FollowsDTO dto = modelMapper.map(following.getFollowing(), FollowsDTO.class);
+                    dto.setStatus(following.getStatus());
+                    return dto;
+                })
+                .collect(Collectors.toSet());
     }
     @Override
     public List<UserDTO> searchUser(String query) {
@@ -115,6 +126,13 @@ public class userServiceImpl implements  UserService{
         List<UserDTO> userDTOS = users.stream().map(user
                 -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());;
         return userDTOS;
+    }
+    @Override
+    public UserDTO findUserByJwt(String bearerToken) {
+        String token = JwtProvider.extractTokenFromBearerToken(bearerToken);
+        String email = JwtProvider.getEmailFromJwtToken(token);
+        UserDTO userDTO = findUserByEmail(email);
+        return userDTO;
     }
     @Override
     public void removeUser(Integer id)throws EntityNotFoundException {

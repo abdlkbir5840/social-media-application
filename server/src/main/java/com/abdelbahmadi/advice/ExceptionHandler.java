@@ -5,10 +5,15 @@ import com.abdelbahmadi.exception.EntityAlreadyExistException;
 import com.abdelbahmadi.exception.EntityNotFoundException;
 import com.abdelbahmadi.exception.IllegalArgumentException;
 import com.abdelbahmadi.response.ErrorResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.Instant;
@@ -38,25 +43,38 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(EntityAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> handleEntityAlreadyExistException(EntityAlreadyExistException ex){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,ex , LocalDateTime.now(ZoneId.systemDefault()));
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus()  , LocalDateTime.now(ZoneId.systemDefault()));
         return new ResponseEntity<>(errorResponse,ex.getHttpStatus());
     }
     @org.springframework.web.bind.annotation.ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public  ResponseEntity<ErrorResponse> HnadleEntityNotFoundException(EntityNotFoundException ex){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,ex,LocalDateTime.now(ZoneId.systemDefault()));
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,LocalDateTime.now(ZoneId.systemDefault()));
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public  ResponseEntity<ErrorResponse> HnadleUserNotFoundException(UsernameNotFoundException ex){
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND ,LocalDateTime.now(ZoneId.systemDefault()));
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
     @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public  ResponseEntity<ErrorResponse> HnadleIllegalArgumentException(IllegalArgumentException ex){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,ex,LocalDateTime.now(ZoneId.systemDefault()));
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,LocalDateTime.now(ZoneId.systemDefault()));
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
     }
     @org.springframework.web.bind.annotation.ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public  ResponseEntity<ErrorResponse> HnadleIllegalArgumentException(AccessDeniedException ex){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,ex,LocalDateTime.now(ZoneId.systemDefault()));
+    public  ResponseEntity<ErrorResponse> HnadleAccessDeniedException(AccessDeniedException ex){
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getHttpStatus() ,LocalDateTime.now(ZoneId.systemDefault()));
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
     }
+    @org.springframework.web.bind.annotation.ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public  ResponseEntity<ErrorResponse> HnadleBadCredentialsException(BadCredentialsException ex){
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.FORBIDDEN ,LocalDateTime.now(ZoneId.systemDefault()));
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
 }

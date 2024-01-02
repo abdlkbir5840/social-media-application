@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,28 +24,45 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
-    @NotBlank(message = "Invalid Name: Empty name")
-    @NotNull(message = "Invalid Name: Name is NULL")
+    @NotBlank(message = "Invalid first name: Empty first name")
+    @NotNull(message = "Invalid first name: first name is NULL")
     private  String firstName;
-    @NotBlank(message = "Invalid lastName: Empty lastName")
-    @NotNull(message = "Invalid lastName: lastName is NULL")
+    @NotBlank(message = "Invalid last name: Empty last name")
+    @NotNull(message = "Invalid last name: last name is NULL")
     private  String lastName;
+    @NotBlank(message = "Invalid email: Empty email")
+    @NotNull(message = "Invalid email: email is NULL")
     @Email(message = "Invalid email")
     private  String email;
-    @NotBlank(message = "Invalid lastName: Empty lastName")
-    @NotNull(message = "Invalid lastName: lastName is NULL")
+    @NotBlank(message = "Invalid password: Empty password")
+    @NotNull(message = "Invalid password: password is NULL")
     private  String password;
-    @NotBlank(message = "Invalid lastName: Empty lastName")
-    @NotNull(message = "Invalid lastName: lastName is NULL")
+    @NotBlank(message = "Invalid gender: Empty gender")
+    @NotNull(message = "Invalid gender: gender is NULL")
     private  String gender;
+    @OneToMany(mappedBy = "following")
+    private Set<Follows> followers;
+    @OneToMany(mappedBy = "follower")
+    private Set<Follows> following;
     @JsonIgnore
-    @ManyToMany
-    private Set<User> followers = new HashSet<>();
-    @JsonIgnore
-    @ManyToMany
-    private Set<User> followings = new HashSet<>();
-    @JsonIgnore
-    @OneToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Post> savedPost = new ArrayList<>();
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+    public List<Post> getSavedPost() {
+        return savedPost;
+    }
+    public void setSavedPost(List<Post> savedPost) {
+        this.savedPost = savedPost;
+    }
 }
