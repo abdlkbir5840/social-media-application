@@ -15,6 +15,5 @@ public interface PostService {
     PostDTO updatePost(PostDTO postDTO, Integer postId, Integer userId) throws  EntityNotFoundException, AccessDeniedException;
     PostDTO savePost(Integer postId, Integer userId) throws EntityNotFoundException;
     List<PostDTO> findAllSavedPost(Integer userId) throws EntityNotFoundException;
-    PostDTO likePost(Integer postId, Integer userId) throws EntityNotFoundException;
     void  deletePost(Integer postId, Integer userId)throws EntityNotFoundException, AccessDeniedException;
 }

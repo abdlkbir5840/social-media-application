@@ -49,11 +49,6 @@ public class PostController {
         UserDTO user = userService.findUserByJwt(bearerToken);
         return  this.postService.findAllSavedPost(user.getId());
     }
-    @PostMapping("/like/{postId}")
-    public PostDTO likePost( @RequestHeader("Authorization") String bearerToken, @PathVariable Integer postId){
-        UserDTO user = userService.findUserByJwt(bearerToken);
-        return  this.postService.likePost( postId, user.getId());
-    }
     @DeleteMapping("/{postId}")
     public  void  deletePost( @RequestHeader("Authorization") String bearerToken, @PathVariable Integer postId){
         UserDTO user = userService.findUserByJwt(bearerToken);

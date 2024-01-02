@@ -1,31 +1,20 @@
 package com.abdelbahmadi.models;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class PostLike {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+@Entity@AllArgsConstructor@NoArgsConstructor@Getter@Setter@Builder
+public class CommentLike {
+    @Id@GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     @ManyToOne
-    private  Post post;
+    private Comment comment;
     @ManyToOne
-    private  User user;
+    private User user;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @PrePersist
     protected void  onCreate(){createdAt = LocalDateTime.now();}
     @PreUpdate
     protected void onUpdate(){updatedAt =  LocalDateTime.now();}
-
 }

@@ -47,7 +47,12 @@ public class User {
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Post> savedPost = new ArrayList<>();
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private  List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+     @JsonIgnore
+    private List<CommentLike> commentLikes = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @PrePersist
@@ -58,7 +63,6 @@ public class User {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
     public List<Post> getSavedPost() {
         return savedPost;
     }

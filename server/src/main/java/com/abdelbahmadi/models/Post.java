@@ -26,6 +26,9 @@ public class Post {
     private List<PostLike> likes = new ArrayList<>();
     @ManyToMany(mappedBy = "savedPost", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> savedPostByUsers = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Comment> comments = new ArrayList<>();
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

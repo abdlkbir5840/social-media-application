@@ -28,22 +28,9 @@ public class UserController {
         UserDTO user = userService.findUserByJwt(bearerToken);
         return userService.updateUser(userDTO, user.getId());
     }
-    @PostMapping("/follow/{followedId}")
-    public UserDTO followUser(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer followedId) {
-        UserDTO user = userService.findUserByJwt(bearerToken);
-        return userService.followUser(user.getId(), followedId);
-    }
     @GetMapping("/search")
     public List<UserDTO> searchUsers(@RequestParam("query") String query) {
         return userService.searchUser(query);
-    }
-    @GetMapping("/followers/{id}")
-    public Set<FollowsDTO> getFollowers(@PathVariable Integer id)   {
-        return userService.findFollowers(id);
-    }
-    @GetMapping("/followings/{id}")
-    public Set<FollowsDTO> getFollowings(@PathVariable Integer id)   {
-     return userService.findFollowings(id);
     }
     @DeleteMapping("/{id}")
     public  void deleteUser(@PathVariable Integer id)  {
