@@ -2,6 +2,7 @@ package com.abdelbahmadi.service;
 
 import com.abdelbahmadi.exception.EntityNotFoundException;
 import com.abdelbahmadi.exception.IllegalArgumentException;
+import com.abdelbahmadi.mapper.ApplicationMapper;
 import com.abdelbahmadi.models.Follows;
 import com.abdelbahmadi.models.User;
 import com.abdelbahmadi.repository.FollowsRepository;
@@ -23,9 +24,9 @@ import java.util.stream.Collectors;
 public class FriendShipServiceImpl implements FriendshipService{
     private final UserRepository userRepository;
     private final FollowsRepository followsRepository;
-    private final ModelMapper modelMapper;
+    private final ApplicationMapper applicationMapper;
     @Override
-    public UserDTO followUser(Integer followerId, Integer followedId) throws EntityNotFoundException, IllegalArgumentException {
+    public FollowsDTO followUser(Integer followerId, Integer followedId) throws EntityNotFoundException, IllegalArgumentException {
         if (followerId.equals(followedId)) {
             throw new IllegalArgumentException("Follower ID cannot be equal to Followed ID");
         }
@@ -36,38 +37,30 @@ public class FriendShipServiceImpl implements FriendshipService{
         Optional<Follows> existingFollow = followsRepository.findByFollowerAndFollowing(follower, followed);
         if (existingFollow.isPresent()) {
             followsRepository.delete(existingFollow.get());
+            return applicationMapper.toFollowDto(existingFollow.get());
         } else {
             Follows follows = new Follows();
             follows.setFollower(follower);
             follows.setFollowing(followed);
             follows.setStatus("Pending");
-            followsRepository.save(follows);
+            Follows savedFollows = followsRepository.save(follows);
+            return applicationMapper.toFollowDto(savedFollows);
         }
-        return modelMapper.map(follower, UserDTO.class);
     }
     @Override
-    public Set<FollowsDTO> findFollowers(Integer userId) throws EntityNotFoundException {
+    public Set<UserDTO> findFollowers(Integer userId) throws EntityNotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
-
         return user.getFollowers().stream()
-                .map(follower -> {
-                    FollowsDTO dto = modelMapper.map(follower.getFollower(), FollowsDTO.class);
-                    dto.setStatus(follower.getStatus());
-                    return dto;
-                })
+                .map(follower -> applicationMapper.toUserDto(follower.getFollower()))
                 .collect(Collectors.toSet());
     }
     @Override
-    public Set<FollowsDTO> findFollowings(Integer userId) throws EntityNotFoundException {
+    public Set<UserDTO> findFollowings(Integer userId) throws EntityNotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
         return user.getFollowing().stream()
-                .map(following -> {
-                    FollowsDTO dto = modelMapper.map(following.getFollowing(), FollowsDTO.class);
-                    dto.setStatus(following.getStatus());
-                    return dto;
-                })
+                .map(following ->applicationMapper.toUserDto(following.getFollowing()))
                 .collect(Collectors.toSet());
     }
 }

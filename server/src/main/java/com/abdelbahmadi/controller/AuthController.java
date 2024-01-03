@@ -44,7 +44,6 @@ public class AuthController {
         AuthResponse authResponse = new AuthResponse("Register Success", token);
         return  authResponse;
     }
-
     @PostMapping("/signin")
     public AuthResponse loginUser(@RequestBody LoginRequest loginRequest){
         Authentication authentication = autenticate(loginRequest.getEmail(), loginRequest.getPassword());
@@ -52,7 +51,6 @@ public class AuthController {
         AuthResponse authResponse = new AuthResponse("Login Success", token);
         return  authResponse;
     }
-
     private Authentication autenticate(String email, String password) {
         UserDetails userDetails = customeUserDetailsService.loadUserByUsername(email);
         if (userDetails == null) {

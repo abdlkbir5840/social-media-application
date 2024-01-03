@@ -1,10 +1,8 @@
 package com.abdelbahmadi.service;
 
 import com.abdelbahmadi.authentication.JwtProvider;
-import com.abdelbahmadi.exception.EntityAlreadyExistException;
 import com.abdelbahmadi.exception.EntityNotFoundException;
 import com.abdelbahmadi.models.User;
-import com.abdelbahmadi.repository.FollowsRepository;
 import com.abdelbahmadi.repository.UserRepository;
 import com.abdelbahmadi.response.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +18,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class userServiceImpl implements  UserService{
+public class UserServiceImpl implements  UserService{
     private final UserRepository userRepository;
-    private final FollowsRepository  followsRepository;
     private final ModelMapper modelMapper;
     @Override
     public List<UserDTO> getAll() {
@@ -44,15 +41,6 @@ public class userServiceImpl implements  UserService{
             throw new EntityNotFoundException("User with email "+email+" not found");
         }
         return  modelMapper.map(user.get(), UserDTO.class);
-    }
-    @Override
-    public UserDTO registerUser(UserDTO userDTO) throws EntityAlreadyExistException {
-        if (userRepository.findUserByEmail(userDTO.getEmail()).isPresent()){
-            throw new EntityAlreadyExistException("User with Email "+userDTO.getEmail()+" Already exist");
-        }
-        User newUser = modelMapper.map(userDTO, User.class);
-        User savedUser = userRepository.save(newUser);
-        return  modelMapper.map(savedUser, UserDTO.class);
     }
     @Override
     public UserDTO updateUser(UserDTO userDTO, Integer id) throws EntityNotFoundException {

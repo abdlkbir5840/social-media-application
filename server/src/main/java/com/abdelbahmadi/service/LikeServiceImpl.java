@@ -1,11 +1,12 @@
 package com.abdelbahmadi.service;
 
 import com.abdelbahmadi.exception.EntityNotFoundException;
-import com.abdelbahmadi.models.Post;
-import com.abdelbahmadi.models.PostLike;
-import com.abdelbahmadi.models.User;
+import com.abdelbahmadi.mapper.ApplicationMapper;
+import com.abdelbahmadi.models.*;
+import com.abdelbahmadi.repository.CommentRepository;
 import com.abdelbahmadi.repository.PostRepository;
 import com.abdelbahmadi.repository.UserRepository;
+import com.abdelbahmadi.response.CommentDTO;
 import com.abdelbahmadi.response.PostDTO;
 import com.abdelbahmadi.response.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,9 @@ public class LikeServiceImpl implements LikeService{
     private final PostRepository postRepository;
     private final PostService postService;
     private final UserRepository userRepository;
+    private  final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
+    private final ApplicationMapper applicationMapper;
 
     @Override
     //@Transactional
@@ -43,12 +46,35 @@ public class LikeServiceImpl implements LikeService{
             post.getLikes().add(postLike);
         }
         Post savedPost = postRepository.save(post);
-        PostDTO postDTO = modelMapper.map(savedPost, PostDTO.class);
-        postDTO.setLikes(savedPost.getLikes().stream().map(like->modelMapper.map(like.getUser(), UserDTO.class)).collect(Collectors.toList()));
-        return postDTO;
+        return applicationMapper.toPostDto(savedPost);
     }
     public  boolean isUserAlreadyLikePost(User user, Post post){
         return  post.getLikes().stream().anyMatch(like
                 ->like.getUser().equals(user));
+    }
+    @Override
+    public CommentDTO likeComment(Integer commentId, Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(()
+                ->new EntityNotFoundException("User with ID "+userId+"not found"));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()
+                ->new EntityNotFoundException("Comment with ID "+commentId+"not found"));
+        if(isAlreadyLikeComment(user, comment)){
+            CommentLike toRemove = comment.getCommentLikes()
+                    .stream().
+                    filter(like-> like.getUser().equals(user)).
+                    findFirst().
+                    orElseThrow(()->new EntityNotFoundException("Like not found"));
+            comment.getCommentLikes().remove(toRemove);
+        }else{
+            CommentLike commentLike = new CommentLike();
+            commentLike.setComment(comment);
+            commentLike.setUser(user);
+            comment.getCommentLikes().add(commentLike);
+        }
+        Comment  savedComment = commentRepository.save(comment);
+        return applicationMapper.toCommentDto(savedComment);
+    }
+    private boolean isAlreadyLikeComment(User user, Comment comment){
+        return comment.getCommentLikes().stream().anyMatch(commentLike -> commentLike.getUser().equals(user));
     }
 }

@@ -8,7 +8,7 @@ import com.abdelbahmadi.response.UserDTO;
 import java.util.Set;
 
 public interface FriendshipService {
-    UserDTO followUser(Integer followerId, Integer followedId) throws EntityNotFoundException, IllegalArgumentException;
-    Set<FollowsDTO> findFollowers(Integer id) throws EntityNotFoundException;
-    Set<FollowsDTO> findFollowings(Integer id) throws EntityNotFoundException;
+    FollowsDTO followUser(Integer followerId, Integer followedId) throws EntityNotFoundException, IllegalArgumentException;
+    Set<UserDTO> findFollowers(Integer id) throws EntityNotFoundException;
+    Set<UserDTO> findFollowings(Integer id) throws EntityNotFoundException;
 }
