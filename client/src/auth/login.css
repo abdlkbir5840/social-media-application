@@ -1,19 +1,10 @@
 .register-container {
   height: 100vh;
-  background: linear-gradient(#2a00b7, #42006c);
-  display: flex;
-  flex-direction: row;
+
 }
-.left {
-  width: calc(100vw - 600px);
-  background-image: url("./images/4912139.jpg");
-  background-size: cover;
-  background-position: center;
-}
+
 .right {
-  overflow: hidden;
-  width: 600px;
-  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -25,7 +16,6 @@
   align-items: center;
   gap: 9px;
   width: 100%;
-  /* margin-top: 100px; */
 }
 .text {
   color: #3c009d;
@@ -38,14 +28,14 @@
   height: 6px;
   border-radius: 9px;
 }
-.form {
+.login-form {
   display: flex;
   flex-direction: column;
-  margin-top: 55px;
+  margin-top: 30px;
   gap: 10px;
 }
 
-.form-group {
+.login-form-group {
   display: flex;
   align-items: center;
   margin: auto;
@@ -56,7 +46,7 @@
   margin-bottom: 20px;
 }
 
-.form-group input {
+.login-form-group input {
   height: 40px;
   width: 400px;
   background: transparent;
@@ -64,18 +54,31 @@
   outline: none;
   color: #797979;
   font-size: 15px;
+  padding-right: 30px;
 }
 
-.form-group .icon {
+.login-form-group .icon {
   margin: 0px 30px;
   color: #2a00b7;
   font-size: 20px;
+}
+.btn-auth .google{
+  color: red;
+}
+.btn-auth .facebook{
+  color: blue;
+}
+.fa-google{
+  color: red;
+}
+.fa-facebook{
+  color: blue;
 }
 .forgot-password {
   padding-left: 62px;
   margin-top: 27px;
   color: #797979;
-  font-size: 15px;
+  font-size: 13px;
 }
 .forgot-password span {
   color: #4c00b4;
@@ -105,7 +108,7 @@
   background: #2a00b7;
 }
 
-.btn {
+.btn-auth {
   margin-top: 10px;
   width: 220px;
   height: 50px;
@@ -121,14 +124,14 @@
   transition: 0.2s ease-in-out;
   margin: 0px 10px;
 }
-.btn:hover {
+.btn-auth:hover {
   border: 1px solid #2d79f3;
 }
 .separator {
   width: 480px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  gap: 10px;
+  /* gap: 10px; */
   color: #8b8e98;
   margin: 20px auto;
 }
@@ -137,7 +140,7 @@
   word-break: keep-all;
   display: block;
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
   margin: auto;
   color: #797979;
 }
@@ -145,12 +148,20 @@
 .separator .line {
   display: inline-block;
   width: 100%;
-  height: 1px;
+  height: px;
   border: 0;
-  background-color: #e8e8e8;
+  background-color: #353535;
   margin: auto;
 }
-
+.input-error{
+  border-color: #fc8181;
+}
+.invalid{
+  color:#fc8181;
+}
+button:disabled{
+  opacity: 0.35;
+}
 @media screen and (max-width: 767px) {
   .left {
     width: 0%;
@@ -161,8 +172,34 @@
     width: 100%;
     height: 100vh;
   }
-
+  .test{
+    margin-left: 300px;
+  }
   .text {
     font-size: 36px;
   }
+}
+
+@media screen and (max-width: 600px) {
+
+  .test{
+    margin-left: 250px;
+  }
+
+}
+
+@media screen and (max-width: 500px) {
+
+  .test{
+    margin-left: 200px;
+  }
+
+}
+
+@media screen and (max-width: 500px) {
+
+  .test{
+    margin-left: 150px;
+  }
+
 }
