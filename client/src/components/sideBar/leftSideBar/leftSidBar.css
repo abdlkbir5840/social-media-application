@@ -1,0 +1,14 @@
+.left .notifications-popup::-webkit-scrollbar,
+.left .friend-requests::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.left .notifications-popup::-webkit-scrollbar-thumb,
+.left .friend-requests::-webkit-scrollbar-thumb {
+  background-color: #888; 
+}
+
+.left .notifications-popup::-webkit-scrollbar-thumb:hover,
+.left .friend-requests::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}

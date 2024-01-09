@@ -1,0 +1,33 @@
+.right .messages .message {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: start;
+}
+.right .messages .message:last-child {
+  margin-bottom: 0;
+}
+.right .messages .message p {
+  font-size: 0.8rem;
+}
+
+.right .messages .message .message-body h5 {
+  font-size: 1rem;
+}
+.right .messages .message .profile-pictuer {
+  position: relative;
+  overflow: visible;
+}
+.right .messages .message .profile-pictuer img {
+  border-radius: 50%;
+}
+.right .messages .message .profile-pictuer .active {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  border: 3px solid var(--color-light);
+  position: absolute;
+  background: var(--color-success);
+  bottom: 0;
+  right: 0;
+}

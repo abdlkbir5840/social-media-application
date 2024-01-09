@@ -2,11 +2,13 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import './header.css'
+import SearchBar from "../searchBar/SearchBar";
 function Header() {
   return (
     <header>
       <div className="custom-container">
         <h2 className="logo">SoclialMedia</h2>
+        {/* <SearchBar /> */}
         <div className="search-bar">
           <FontAwesomeIcon icon={faSearch} />
           <input

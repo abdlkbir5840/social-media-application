@@ -11,12 +11,12 @@ header .custom-container{
     align-items: center;
     justify-content: space-between;
 }
-header .search-bar{
+.search-bar{
     background: var(--color-light);
     border-radius: var(--border-radius);
     padding: var(--search-padding);
 }
-header .search-bar input[type="search"]{
+.search-bar input[type="search"]{
     background: transparent;
     width: 30vh;
     margin-left: 1rem;
@@ -31,5 +31,4 @@ header .create{
     align-items: center;
     gap: 2rem;
 }
-
 
