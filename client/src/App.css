@@ -35,14 +35,14 @@ body {
   color: var(--color-dark);
   background: var(--color-light);
   overflow-x: hidden;
-  height: 2000px;
 }
+
 .custom-container {
   width: 80%;
   margin: auto;
 }
 
-img{
+.custom-container img{
   display: block;
   width: 100%;
 }
@@ -75,6 +75,3 @@ img{
   border-radius: 50%;
   overflow: hidden;
 }
-
-
-

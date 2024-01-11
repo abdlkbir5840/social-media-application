@@ -31,5 +31,8 @@
   "SIGN.FORM.MALE": "Male",
   "SIGN.FORM.FEMALE": "Female",
   "SIGN.FORM.SUBMIT": "Submit",
-  "FORM.PRIVACY":"Agree to terms and conditions"
+  "FORM.PRIVACY":"Agree to terms and conditions",
+  "SIGN.FORM.REGISTRATION_SUCCESS": "Registration successful! Please log in.",
+  "SIGN.FORM.EMAIL_ALREADY_IN_USE": "Email is already in use. Please use another email.",
+  "LOGIN.FORM.INVALID_CREDENTIALS": "Invalid email or password. Please try again."
 }

@@ -30,5 +30,7 @@
   "SIGN.FORM.MALE": "ذكر",
   "SIGN.FORM.FEMALE": "أنثى",
   "SIGN.FORM.SUBMIT": "إرسال",
-  "FORM.PRIVACY": "الموافقة على الشروط والأحكام"
+  "FORM.PRIVACY": "الموافقة على الشروط والأحكام",
+  "SIGN.FORM.REGISTRATION_SUCCESS": "تم التسجيل بنجاح! الرجاء تسجيل الدخول.",
+  "LOGIN.FORM.INVALID_CREDENTIALS": "البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى."
 }

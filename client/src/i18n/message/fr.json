@@ -30,5 +30,10 @@
   "SIGN.FORM.MALE": "Homme",
   "SIGN.FORM.FEMALE": "Femme",
   "SIGN.FORM.SUBMIT": "Soumettre",
-  "FORM.PRIVACY": "Accepter les termes et conditions"
+  "FORM.PRIVACY": "Accepter les termes et conditions",
+  "SIGN.FORM.REGISTRATION_SUCCESS": "Enregistrement réussi! Veuillez vous connecter.",
+  "SIGN.FORM.EMAIL_ALREADY_IN_USE": "L'e-mail est déjà utilisé. Veuillez utiliser un autre e-mail.",
+  "LOGIN.FORM.INVALID_CREDENTIALS": "Email ou mot de passe incorrect. Veuillez réessayer."
+
+
 }

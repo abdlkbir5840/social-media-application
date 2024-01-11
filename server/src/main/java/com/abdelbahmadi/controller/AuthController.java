@@ -8,7 +8,6 @@ import com.abdelbahmadi.repository.UserRepository;
 import com.abdelbahmadi.response.AuthResponse;
 import com.abdelbahmadi.response.LoginRequest;
 import com.abdelbahmadi.response.RegisterRequest;
-import com.abdelbahmadi.response.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;

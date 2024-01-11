@@ -19,7 +19,7 @@ function Header() {
         <div className="create">
             <label className="custom-btn custom-btn-primary" htmlFor="create-post">Create</label>
             <div className="profile-pictuer">
-                <img src="./assets/images/profile-1.jpg" alt="profile" />
+                <img src="/assets/images/profile-1.jpg" alt="profile" />
             </div>
         </div>
       </div>

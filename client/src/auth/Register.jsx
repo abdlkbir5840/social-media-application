@@ -2,14 +2,20 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { registrationSchema } from "../schemas";
+import authService from "../service/auth.service";
+import { toast } from "react-toastify";
 
 function Register() {
   const { t } = useTranslation();
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(actions);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    actions.resetForm();
+    try {
+      const response = await authService.register(values);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.success(t("SIGN.FORM.REGISTRATION_SUCCESS"));
+      actions.resetForm();
+    } catch (error) {
+      toast.error(t("SIGN.FORM.EMAIL_ALREADY_IN_USE"));
+    }
   };
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } =
     useFormik({

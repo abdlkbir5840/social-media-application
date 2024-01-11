@@ -1,9 +1,9 @@
-.register-container {
+/* .register-container {
   height: 100vh;
-
-}
+} */
 
 .right {
+  height: 92vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,6 @@
   height: 60px;
   background: #eaeaea;
   border-radius: 6px;
-  margin-bottom: 20px;
 }
 
 .login-form-group input {
@@ -161,6 +160,19 @@
 }
 button:disabled{
   opacity: 0.35;
+}
+.disply-error{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.fix-width{
+  margin-top: 0;
+  width: 30%;
+  margin-bottom: 20px;
+  
+
 }
 @media screen and (max-width: 767px) {
   .left {

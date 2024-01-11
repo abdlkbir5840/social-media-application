@@ -5,10 +5,13 @@ import './index.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/config.js';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <I18nextProvider i18n={i18n}>
       <App />
+      <ToastContainer />
     </I18nextProvider>
   </React.StrictMode>,
 )
