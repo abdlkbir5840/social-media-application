@@ -3,10 +3,10 @@ import "./message.css";
 
 function Message() {
   const [messages, setMessages] = useState([
-    { id: 1, profileImage: "./assets/images/profile-7.jpg", name: "Eden John", message: "Just woke up bruh", active: false },
-    { id: 2, profileImage: "./assets/images/profile-8.jpg", name: "Eden John", message: "Just woke up bruh", active: true },
-    { id: 3, profileImage: "./assets/images/profile-10.jpg", name: "Eden John", message: "Just woke up bruh", active: false },
-    { id: 4, profileImage: "./assets/images/profile-9.jpg", name: "Eden John", message: "Just woke up bruh", active: true },
+    { id: 1, profileImage: "/assets/images/profile-7.jpg", name: "Eden John", message: "Just woke up bruh", active: false },
+    { id: 2, profileImage: "/assets/images/profile-8.jpg", name: "Eden John", message: "Just woke up bruh", active: true },
+    { id: 3, profileImage: "/assets/images/profile-10.jpg", name: "Eden John", message: "Just woke up bruh", active: false },
+    { id: 4, profileImage: "/assets/images/profile-9.jpg", name: "Eden John", message: "Just woke up bruh", active: true },
   ]);
 
   return (

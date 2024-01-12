@@ -35,9 +35,5 @@ export const loginSchema = (t) =>
       .required(t("SIGN.FORM.REQUIRED")),
     password: yup
       .string()
-      .required(t("SIGN.FORM.REQUIRED"))
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,}$/,
-        t("SIGN.FORM.INVALID_PASSWORD")
-      ),
+      .required(t("SIGN.FORM.REQUIRED")),
   });

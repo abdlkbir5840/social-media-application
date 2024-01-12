@@ -3,7 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import './header.css'
 import SearchBar from "../searchBar/SearchBar";
+import { useCookies } from "react-cookie";
 function Header() {
+  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
+  const handleLogout = () => {
+    // Remove the "authToken" cookie
+    removeCookie("authToken");
+    
+
+    // Perform any additional logout logic (e.g., redirect to login page)
+    // ...
+  };
   return (
     <header>
       <div className="custom-container">
@@ -16,7 +26,7 @@ function Header() {
             placeholder="Search for creators, insperation, and projects"
           />
         </div>
-        <div className="create">
+        <div className="create" onClick={handleLogout}>
             <label className="custom-btn custom-btn-primary" htmlFor="create-post">Create</label>
             <div className="profile-pictuer">
                 <img src="/assets/images/profile-1.jpg" alt="profile" />

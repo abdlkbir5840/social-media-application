@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
@@ -14,19 +14,18 @@ import { useCookies } from "react-cookie";
 function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken'])
+  const [, setCookie, ] = useCookies(["authToken"]);
   const onSubmit = async (values, actions) => {
     try {
       const response = await authService.login(values);
       const token = await response.token;
-      console.log(token)
-      setCookie('authToken', token, { maxAge: 7 * 24 * 60 * 60 });
+      setCookie("authToken", token, { maxAge: 7 * 24 * 60 * 60 });
       await new Promise((resolve) => setTimeout(resolve, 1000));
       toast.success("login success");
-      actions.resetForm();
-      navigate("/main")
+      // actions.resetForm();
+      navigate("/main");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(t("LOGIN.FORM.INVALID_CREDENTIALS"));
     }
   };
@@ -34,7 +33,6 @@ function Login() {
     values,
     errors,
     touched,
-    isSubmitting,
     handleChange,
     handleBlur,
     handleSubmit,
@@ -46,6 +44,7 @@ function Login() {
     validationSchema: loginSchema(t),
     onSubmit,
   });
+
   return (
     <div className="register-container">
       <NavBar />
@@ -97,11 +96,10 @@ function Login() {
               />
             </div>
             <div className="fix-width">
-            {errors.password && touched.password && (
-              <div className="invalid"> {errors.password}</div>
-            )}
+              {errors.password && touched.password && (
+                <div className="invalid"> {errors.password}</div>
+              )}
             </div>
-           
           </div>
         </div>
         <div className="submit-container" onClick={handleSubmit}>

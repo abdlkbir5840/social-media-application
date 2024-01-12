@@ -2,6 +2,7 @@ import React from "react";
 import './menuSection.css'
 import Notifications from "../notifications/Notifications";
 import FriendRequests from "../friendRequests/FriendRequests";
+import { Link } from "react-router-dom";
 function MenuSection() {
   return (
     <div className="sidbar">
@@ -12,7 +13,7 @@ function MenuSection() {
         <h3>Home</h3>
       </a>
       <Notifications />
-      <a href="" className="menu-item" id="messages-notofications">
+      <Link to="messenger" className="menu-item" id="messages-notofications">
         <span class="position-relative ">
           <i class="fa-regular fa-envelope"></i>
 
@@ -22,7 +23,7 @@ function MenuSection() {
           </span>
         </span>
         <h3>Messages</h3>
-      </a>
+      </Link>
       <a href="" className="menu-item">
         <span>
           <i class="fa-regular fa-bookmark"></i>
