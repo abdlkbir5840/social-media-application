@@ -1,4 +1,4 @@
-main .custom-container .left .profile {
+ .left .profile {
     padding: var(--card-padding);
     background: var(--color-white);
     border-radius: var(--card-border-radius);

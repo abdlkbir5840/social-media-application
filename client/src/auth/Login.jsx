@@ -19,10 +19,10 @@ function Login() {
     try {
       const response = await authService.login(values);
       const token = await response.token;
-      setCookie("authToken", token, { maxAge: 7 * 24 * 60 * 60 });
+      setCookie("authToken", token);
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("login success");
-      // actions.resetForm();
+      // toast.success("login success");
+      actions.resetForm();
       navigate("/main");
     } catch (error) {
       console.log(error);

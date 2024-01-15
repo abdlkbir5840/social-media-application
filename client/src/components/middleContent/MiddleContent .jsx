@@ -9,7 +9,7 @@ function MiddleContent() {
       {/*================================= CREATE POST ================================= */}
       <form className="create-post" action="">
         <div className="profile-pictuer">
-          <img src="./assets/images/profile-1.jpg" alt="profile" />
+          <img src="/assets/images/profile-1.jpg" alt="profile" />
         </div>
         <input
           type="text"
@@ -25,7 +25,6 @@ function MiddleContent() {
           className="custom-btn custom-btn-primary"
         />
       </form>
-      {/*================================= END POST ================================= */}
       <Feed />
     </div>
   );

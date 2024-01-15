@@ -6,7 +6,8 @@ const authService = {
       const response = await instance.post("/auth/signup", userData);
       return response.data;
     } catch (error) {
-        console.log(error)
+    console.log(error.response.data.message)
+    console.log(error)
       throw error;
     }
   },
@@ -17,6 +18,7 @@ const authService = {
       return response.data;
     } catch (error) {
     console.log(error.response.data.message)
+    console.log(error)
       throw error;
     }
   },

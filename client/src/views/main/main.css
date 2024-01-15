@@ -9,7 +9,7 @@ main .custom-container {
   position: relative;
 }
 
-main .custom-container .left , main .custom-container .right {
+ .custom-container .left ,  .custom-container .right {
   height: max-content;
   position: sticky;
   top: var(--sticky-top-left);

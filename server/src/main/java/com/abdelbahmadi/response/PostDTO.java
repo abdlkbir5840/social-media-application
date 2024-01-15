@@ -12,7 +12,6 @@ public class PostDTO {
     private Integer Id;
     private String caption;
     private String image;
-    private String video;
     private  Integer countPostComments;
     private  Integer countPostLikes;
     private LocalDateTime createdAt;

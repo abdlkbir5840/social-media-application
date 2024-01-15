@@ -16,7 +16,6 @@ public class Post {
     private Integer Id;
     private String caption;
     private String image;
-    private String video;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @ManyToOne

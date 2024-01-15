@@ -44,7 +44,6 @@ public class ApplicationMapper {
                 .Id(post.getId())
                 .caption(post.getCaption())
                 .image(post.getImage())
-                .video(post.getVideo())
                 .countPostLikes(post.getLikes().size())
                 .countPostComments(post.getComments().size())
                 .user(this.toUserDto(post.getUser()))

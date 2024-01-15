@@ -1,0 +1,131 @@
+.profile-container {
+  top: 5.4rem;
+  display: grid;
+  grid-template-columns: 18vw auto 10vw;
+  column-gap: 2rem;
+  position: relative;
+}
+
+.profile-header {
+  box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+  border: 1px solid #f2f4f9;
+}
+
+.profile-header .cover {
+  position: relative;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.profile-header .cover figure {
+  margin-bottom: 0;
+}
+
+.profile-header .cover figure img {
+  border-radius: 0.25rem 0.25rem 0 0;
+  width: 100%;
+  height: 300px;
+}
+
+.profile-header .cover .gray-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), #fff 99%);
+}
+.btn-edit-profile:hover{
+    color: white;
+}
+.profile-header .cover .cover-body {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.profile-header .cover .cover-body .profile-pic {
+  border-radius: 50%;
+  width: 100px;
+  border: 5px solid white;
+}
+
+.profile-header .cover .cover-body .profile-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 17px;
+}
+
+.profile-header .header-links {
+  padding: 40px 10px 10px 20px;
+  background: #fff;
+  border-radius: 0 0 0.25rem 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.edit-profile:hover{
+  color: #727cf5;
+  cursor: pointer;
+}
+.profile-header .header-links ul {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  height: fit-content;
+  width: 50%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-header .header-links ul li a {
+  color: #000;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.profile-header .header-links ul li:hover,
+.profile-header .header-links ul li.active {
+  color: #727cf5;
+}
+
+.profile-header .header-links ul li:hover a,
+.profile-header .header-links ul li.active a {
+  color: #727cf5;
+}
+
+@media (max-width: 767px) {
+  .profile-header .cover figure {
+    height: 110px;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 2400px) {
+  .profile-header .cover figure {
+    height: 280px;
+    overflow: hidden;
+  }
+}
+@media (max-width: 767px) {
+  .profile-header .cover figure img {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    margin-top: 15px;
+  }
+}
+
+@media (min-width: 2400px) {
+  .profile-header .cover figure img {
+    margin-top: -55px;
+  }
+}
+@media (max-width: 767px) {
+  .profile-header .cover .cover-body .profile-pic {
+    width: 70px;
+  }
+}

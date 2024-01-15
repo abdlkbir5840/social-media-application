@@ -16,7 +16,7 @@ function RequireAuth({ children }) {
       }
 
       const response = await instance.get("/api/v1/users/profile");
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data !== undefined) {
         setIsAuthenticated(true);
@@ -25,7 +25,7 @@ function RequireAuth({ children }) {
       }
     } catch (error) {
       console.error("Error loading user:", error.response?.data?.message);
-      console.error("Votre session est terminée. Veuillez vous reconnecter.");
+      // console.error("Votre session est terminée. Veuillez vous reconnecter.");
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
@@ -42,7 +42,7 @@ function RequireAuth({ children }) {
     };
   }, [token]);
 
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
 
   React.useEffect(() => {
     const delayId = setTimeout(() => {

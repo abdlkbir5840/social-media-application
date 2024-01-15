@@ -1,4 +1,4 @@
-.middle .feeds .feed {
+ .feeds .feed {
   background: var(--color-white);
   border-radius: var(--card-border-radius);
   padding: var(--card-padding);
@@ -8,38 +8,38 @@
   line-height: 1.5;
 }
 
-.middle .feed .head {
+ .feed .head {
   display: flex;
   justify-content: space-between;
 }
-.middle .feed .user {
+ .feed .user {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
 }
-.middle .feed .user .info h3 {
+ .feed .user .info h3 {
   font-size: 1rem;
 }
-.middle .feed .photo {
+ .feed .photo {
   border-radius: var(--card-border-radius);
   overflow: hidden;
   margin: 0.7rem 0;
 }
-.middle .feed .action-buttons {
+ .feed .action-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.4rem;
   margin: 0.6rem;
 }
-.middle .feed .interaction-buttons {
+ .feed .interaction-buttons {
   display: flex;
   gap: 0.7rem;
 }
-.middle .liked-by {
+ .liked-by {
   display: flex;
 }
-.middle .liked-by span {
+ .liked-by span {
   width: 1.4rem;
   height: 1.4rem;
   display: block;
@@ -48,9 +48,9 @@
   border: 2px solid var(--color-white);
   margin-left: -0.6rem;
 }
-.middle .liked-by span:first-child {
+ .liked-by span:first-child {
   margin: 0;
 }
-.middle .liked-by p {
+ .liked-by p {
   margin-left: 0.5rem;
 }

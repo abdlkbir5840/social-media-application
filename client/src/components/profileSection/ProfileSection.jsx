@@ -4,7 +4,7 @@ function ProfileSection() {
   return (
     <a href="" className="profile">
       <div className="profile-pictuer">
-        <img src="./assets/images/profile-1.jpg" alt="" />
+        <img src="/assets/images/profile-1.jpg" alt="" />
       </div>
       <div className="handle">
         <h6>Ahmed Kamal</h6>
