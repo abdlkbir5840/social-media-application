@@ -12,7 +12,6 @@ public interface UserService {
      UserDTO findUserById (Integer id) throws EntityNotFoundException;
      UserDTO findUserByEmail (String email) throws EntityNotFoundException;
      UserDTO updateUser (UserDTO userDTO, Integer id) throws EntityNotFoundException;
-      List<UserDTO> searchUser(String query);
      UserDTO findUserByJwt(String bearerToken);
      void removeUser(Integer id) throws EntityNotFoundException;
 }

@@ -11,7 +11,9 @@ import { loginSchema } from "../schemas";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 function Login() {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [, setCookie, ] = useCookies(["authToken"]);

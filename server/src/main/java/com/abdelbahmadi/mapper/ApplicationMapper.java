@@ -1,13 +1,7 @@
 package com.abdelbahmadi.mapper;
 
-import com.abdelbahmadi.models.Comment;
-import com.abdelbahmadi.models.Follows;
-import com.abdelbahmadi.models.Post;
-import com.abdelbahmadi.models.User;
-import com.abdelbahmadi.response.CommentDTO;
-import com.abdelbahmadi.response.FollowsDTO;
-import com.abdelbahmadi.response.PostDTO;
-import com.abdelbahmadi.response.UserDTO;
+import com.abdelbahmadi.models.*;
+import com.abdelbahmadi.response.*;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -15,19 +9,18 @@ import java.util.stream.Collectors;
 @Service
 public class ApplicationMapper {
     public UserDTO toUserDto(User user){
-        UserDTO userDTO = UserDTO.builder()
+        return UserDTO.builder()
                 .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
+                .firstName(user.getProfile().getFirstName())
+                .lastName(user.getProfile().getLastName())
                 .email(user.getEmail())
-                .gender(user.getGender())
+                .gender(user.getProfile().getGender())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
-        return  userDTO;
     }
     public CommentDTO toCommentDto(Comment comment){
-        CommentDTO commentDTO = CommentDTO.builder()
+        return CommentDTO.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
                 .countLikes(comment.getCommentLikes().size())
@@ -37,10 +30,9 @@ public class ApplicationMapper {
                 .createdAt(comment.getCreatedAt())
                 .updatedAt(comment.getUpdatedAt())
                 .build();
-        return  commentDTO;
     }
     public PostDTO toPostDto(Post post){
-        PostDTO postDTO = PostDTO.builder()
+        return PostDTO.builder()
                 .Id(post.getId())
                 .caption(post.getCaption())
                 .image(post.getImage())
@@ -49,21 +41,44 @@ public class ApplicationMapper {
                 .user(this.toUserDto(post.getUser()))
                 .likes(post.getLikes().stream().map(postLike
                         -> this.toUserDto(postLike.getUser())).collect(Collectors.toList()))
-                .comments(post.getComments().stream().map(comment
-                        -> this.toCommentDto(comment)).collect(Collectors.toList()))
+                .comments(post.getComments().stream().map(this::toCommentDto).collect(Collectors.toList()))
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build();
-        return postDTO;
     }
     public FollowsDTO toFollowDto(Follows follows){
-        FollowsDTO followsDTO = FollowsDTO.builder()
+        return FollowsDTO.builder()
                 .follower(this.toUserDto(follows.getFollower()))
                 .followed(this.toUserDto(follows.getFollowing()))
                 .status(follows.getStatus())
                 .createdAt(follows.getCreatedAt())
                 .updatedAt(follows.getUpdatedAt())
                 .build();
-        return followsDTO;
+    }
+    public ProfileSelectionDTO toProfileSelectionDTO(Profile profile){
+        return ProfileSelectionDTO.builder()
+                .profileId(profile.getId())
+                .firstName(profile.getFirstName())
+                .lastName(profile.getLastName())
+                .profileImg(profile.getProfileImg())
+                .build();
+    }
+    public ProfileDTO toProfileDTO(User user){
+        return ProfileDTO.builder()
+                .id(user.getProfile().getId())
+                .userId(user.getId())
+                .firstName(user.getProfile().getFirstName())
+                .lastName(user.getProfile().getLastName())
+                .profileImg(user.getProfile().getProfileImg())
+                .address(user.getProfile().getAddress())
+                .gender(user.getProfile().getGender())
+                .country(user.getProfile().getCountry())
+                .city(user.getProfile().getCity())
+                .coverImg(user.getProfile().getCoverImg())
+                .profileImg(user.getProfile().getProfileImg())
+                .bio(user.getProfile().getBio())
+                .birthday(user.getProfile().getBirthday())
+                .followersCount(user.getFollowers().size()+user.getFollowing().size())
+                .build();
     }
 }

@@ -20,7 +20,7 @@ const ProtectedRoutes = () => {
       >
         <Route index element={<Main />} />
         <Route path="messenger" element={<Messenger />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile/:id" element={<Profile />} />
       </Route>
     </Routes>
   );

@@ -1,17 +1,26 @@
 import { useFormik } from "formik";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { registrationSchema } from "../../schemas";
 
 function EditeProfile() {
   const { t } = useTranslation();
   const onSubmit = async (values, actions) => {
-    console.log('User:', getUserObject(values));
-    console.log('Profile:', getProfileObject(values));
+    console.log("User:", getUserObject(values));
+    console.log("Profile:", getProfileObject(values));
   };
   const getUserObject = (values) => {
-    const { firstName, lastName, telephone, address, country, city, gender } = values;
+    const {
+      userId,
+      firstName,
+      lastName,
+      telephone,
+      address,
+      country,
+      city,
+      gender,
+    } = values;
     return {
+      userId,
       firstName,
       lastName,
       telephone,
@@ -23,29 +32,36 @@ function EditeProfile() {
   };
 
   const getProfileObject = (values) => {
-    const { profileImg, coverImg, birthday } = values;
+    const basePath = "C:\\fakepath\\";
+    const profileImg = values.profileImg.replace(basePath, "");
+    const coverImg = values.coverImg.replace(basePath, "");
+    const { profileId, birthday, bio } = values;
     return {
+      profileId,
       profileImg,
       coverImg,
       birthday,
+      bio,
     };
   };
-  const { values, isSubmitting, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: {
-        firstName: "",
-        lastName: "",
-        telephone: "",
-        address: "",
-        country: "",
-        city: "",
-        gender: "",
-        profileImg: "",
-        coverImg: "",
-        birthday:"",
-      },
-      onSubmit,
-    });
+  const { values, isSubmitting, handleChange, handleSubmit } = useFormik({
+    initialValues: {
+      userId: "",
+      profileId: "",
+      firstName: "",
+      lastName: "",
+      telephone: "",
+      address: "",
+      country: "",
+      city: "",
+      gender: "",
+      profileImg: "",
+      coverImg: "",
+      birthday: "",
+      bio: "",
+    },
+    onSubmit,
+  });
   return (
     <>
       <span
@@ -139,7 +155,7 @@ function EditeProfile() {
                     type="text"
                     className="form-control"
                     id="country"
-                    placeholder= {t("SIGN.FORM.COUNTRY")}
+                    placeholder={t("SIGN.FORM.COUNTRY")}
                   />
                 </div>
                 <div className="col-md-2">
@@ -172,7 +188,7 @@ function EditeProfile() {
                     <option value="F">{t("SIGN.FORM.FEMALE")}</option>
                   </select>
                 </div>
-                
+
                 <div className="col-md-6">
                   <label htmlFor="profileImg" className="form-label">
                     {t("FORM.EDIT_PROFIL.PROFILE")}

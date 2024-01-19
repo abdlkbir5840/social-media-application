@@ -11,14 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    private  Integer id;
+    private  String email;
+    private  String password;
     private  String firstName;
     private  String lastName;
-    private  String email;
     private  String telephone;
     private  String address;
     private  String country;
     private  String city;
-    private  String password;
     private  String gender;
 }

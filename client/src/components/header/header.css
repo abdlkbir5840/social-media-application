@@ -32,3 +32,6 @@ header .create{
     gap: 2rem;
 }
 
+.dropdown{
+    cursor: pointer;
+}

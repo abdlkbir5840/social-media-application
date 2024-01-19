@@ -44,23 +44,10 @@ public class UserServiceImpl implements  UserService{
     public UserDTO updateUser(UserDTO userDTO, Integer id) throws EntityNotFoundException {
         User  oldeUser = userRepository.findById(id).orElseThrow(()
                 ->new EntityNotFoundException("User with ID "+id+" not found"));
-        if(userDTO.getFirstName()!=null){
-            oldeUser.setFirstName(userDTO.getFirstName());
-        }
-        if(userDTO.getLastName()!=null){
-            oldeUser.setLastName(userDTO.getLastName());
-        }
-        if(userDTO.getGender()!=null){
-            oldeUser.setGender(userDTO.getGender());
-        }
         User updatedUser = userRepository.save(oldeUser);
         return applicationMapper.toUserDto(updatedUser);
     }
-    @Override
-    public List<UserDTO> searchUser(String query) {
-        List<User>  users = userRepository.searchUser(query);
-        return users.stream().map(applicationMapper::toUserDto).collect(Collectors.toList());
-    }
+
     @Override
     public UserDTO findUserByJwt(String bearerToken) {
         String token = JwtProvider.extractTokenFromBearerToken(bearerToken);

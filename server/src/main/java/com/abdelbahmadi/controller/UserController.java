@@ -1,12 +1,10 @@
 package com.abdelbahmadi.controller;
-import com.abdelbahmadi.response.FollowsDTO;
 import com.abdelbahmadi.response.UserDTO;
 import com.abdelbahmadi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RequestMapping("/api/v1/users")
 @RestController
@@ -28,17 +26,9 @@ public class UserController {
         UserDTO user = userService.findUserByJwt(bearerToken);
         return userService.updateUser(userDTO, user.getId());
     }
-    @GetMapping("/search")
-    public List<UserDTO> searchUsers(@RequestParam("query") String query) {
-        return userService.searchUser(query);
-    }
     @DeleteMapping("/{id}")
     public  void deleteUser(@PathVariable Integer id)  {
         userService.removeUser(id);
     }
-    @GetMapping("/profile")
-    public  UserDTO getUserFromToken(@RequestHeader("Authorization") String bearerToken)  {
-        UserDTO user = userService.findUserByJwt(bearerToken);
-       return user;
-    }
+
 }

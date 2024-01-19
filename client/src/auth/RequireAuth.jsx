@@ -3,19 +3,22 @@ import { useCookies } from "react-cookie";
 import instance from "../api/apiConfig";
 import { Navigate, Outlet } from "react-router-dom";
 import BeatLoader from "react-spinners/BeatLoader";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "../store/auth.slice";
 function RequireAuth({ children }) {
   const [cookies, ,] = useCookies(["authToken"]);
   const token = cookies.authToken;
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-
+  const dispatch = useDispatch();
   const fetchData = async () => {
     try {
       if (token) {
         instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
 
-      const response = await instance.get("/api/v1/users/profile");
+      const response = await instance.get("/api/v1/profile/profileSelection");
+      dispatch(getCurrentUser());
       // console.log(response.data);
 
       if (response.data !== undefined) {
