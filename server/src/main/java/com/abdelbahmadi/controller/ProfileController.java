@@ -1,5 +1,6 @@
 package com.abdelbahmadi.controller;
 
+import com.abdelbahmadi.response.ProfileDTO;
 import com.abdelbahmadi.response.ProfileResponse;
 import com.abdelbahmadi.response.ProfileSelectionDTO;
 import com.abdelbahmadi.service.ProfileService;
@@ -17,8 +18,13 @@ public class ProfileController {
     public ProfileSelectionDTO getProfileSelection(@RequestHeader("Authorization") String bearerToken)  {
         return profileService.getProfileSelection(bearerToken);
     }
-    @GetMapping("/profile/{userId}")
-    public ProfileResponse getProfile(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer userId)  {
+    @PutMapping("/{profileId}/{userId}")
+    public ProfileDTO editProfile(@RequestHeader("Authorization") String bearerToken, @RequestBody ProfileDTO profileDTO, @PathVariable Integer profileId, @PathVariable Integer userId)  {
+        userService.findUserByJwt(bearerToken);
+        return profileService.editProfile(profileDTO, profileId, userId);
+    }
+    @GetMapping("/{userId}")
+    public ProfileDTO getProfile(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer userId)  {
         userService.findUserByJwt(bearerToken);
         return profileService.getProfile(userId);
     }

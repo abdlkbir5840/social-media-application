@@ -16,5 +16,4 @@ public class ProfileDTO {
     private String profileImg;
     private String bio;
     private String birthday;
-    private Integer followersCount;
 }

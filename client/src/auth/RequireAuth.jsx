@@ -5,6 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../store/auth.slice";
+import { PROFILE_URL } from "../utils";
 function RequireAuth({ children }) {
   const [cookies, ,] = useCookies(["authToken"]);
   const token = cookies.authToken;
@@ -17,7 +18,7 @@ function RequireAuth({ children }) {
         instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
 
-      const response = await instance.get("/api/v1/profile/profileSelection");
+      const response = await instance.get(`${PROFILE_URL}/profileSelection`);
       dispatch(getCurrentUser());
       // console.log(response.data);
 
@@ -27,6 +28,7 @@ function RequireAuth({ children }) {
         setIsAuthenticated(false);
       }
     } catch (error) {
+      console.log(error)
       console.error("Error loading user:", error.response?.data?.message);
       // console.error("Votre session est terminée. Veuillez vous reconnecter.");
       setIsAuthenticated(false);

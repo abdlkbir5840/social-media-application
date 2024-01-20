@@ -71,6 +71,7 @@ public class ApplicationMapper {
                 .lastName(user.getProfile().getLastName())
                 .profileImg(user.getProfile().getProfileImg())
                 .address(user.getProfile().getAddress())
+                .telephone(user.getProfile().getTelephone())
                 .gender(user.getProfile().getGender())
                 .country(user.getProfile().getCountry())
                 .city(user.getProfile().getCity())
@@ -78,7 +79,6 @@ public class ApplicationMapper {
                 .profileImg(user.getProfile().getProfileImg())
                 .bio(user.getProfile().getBio())
                 .birthday(user.getProfile().getBirthday())
-                .followersCount(user.getFollowers().size()+user.getFollowing().size())
                 .build();
     }
 }

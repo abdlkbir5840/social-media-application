@@ -1,14 +1,30 @@
 import { useFormik } from "formik";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { profileService } from "../../service/profile.service";
 
-function EditeProfile() {
+function EditeProfile({ userProfile, currentUserId }) {
   const { t } = useTranslation();
+  const {
+    id,
+    userId,
+    firstName,
+    lastName,
+    telephone,
+    address,
+    gender,
+    country,
+    city,
+    coverImg,
+    profileImg,
+    birthday,
+    bio,
+  } = userProfile;
   const onSubmit = async (values, actions) => {
-    console.log("User:", getUserObject(values));
-    console.log("Profile:", getProfileObject(values));
-  };
-  const getUserObject = (values) => {
+    const basePath = "C:\\fakepath\\";
+    const profileImg= values.profileImg?.replace(basePath, "");
+    const coverImg = values.coverImg?.replace(basePath, "");
+    const id = values.profileId;
     const {
       userId,
       firstName,
@@ -18,9 +34,12 @@ function EditeProfile() {
       country,
       city,
       gender,
+      birthday,
+      bio,
     } = values;
-    return {
+    const profileDto = {
       userId,
+      id,
       firstName,
       lastName,
       telephone,
@@ -28,37 +47,30 @@ function EditeProfile() {
       country,
       city,
       gender,
-    };
-  };
-
-  const getProfileObject = (values) => {
-    const basePath = "C:\\fakepath\\";
-    const profileImg = values.profileImg.replace(basePath, "");
-    const coverImg = values.coverImg.replace(basePath, "");
-    const { profileId, birthday, bio } = values;
-    return {
-      profileId,
       profileImg,
       coverImg,
       birthday,
       bio,
-    };
+    }
+    const profileId = userProfile.id
+    profileService.editProfile({profileDto, profileId, currentUserId})
   };
+
   const { values, isSubmitting, handleChange, handleSubmit } = useFormik({
     initialValues: {
-      userId: "",
-      profileId: "",
-      firstName: "",
-      lastName: "",
-      telephone: "",
-      address: "",
-      country: "",
-      city: "",
-      gender: "",
-      profileImg: "",
+      userId: userId,
+      profileId: id,
+      firstName: firstName,
+      lastName: lastName,
+      telephone: telephone,
+      address: address,
+      country: country,
+      city: city,
+      gender: gender,
+      profileImg: "" ,
       coverImg: "",
-      birthday: "",
-      bio: "",
+      birthday: birthday,
+      bio: bio,
     },
     onSubmit,
   });

@@ -1,42 +1,70 @@
-import React from "react";
-import './menuSection.css'
+import React, { useState } from "react";
+import "./menuSection.css";
 import Notifications from "../notifications/Notifications";
 import FriendRequests from "../friendRequests/FriendRequests";
 import { Link } from "react-router-dom";
+
 function MenuSection() {
+  const [activeMenuItem, setActiveMenuItem] = useState("home"); // Initial active menu item
+
+  const handleMenuItemClick = (menuItem) => {
+    console.log(activeMenuItem)
+    setActiveMenuItem(menuItem);
+  };
+
   return (
     <div className="sidbar">
-      <a href="" className="menu-item active">
+      <Link
+        to="/main"
+        className={`menu-item ${activeMenuItem === "home" ? "active" : ""}`}
+        onClick={() => handleMenuItemClick("home")}
+      >
         <span>
-          <i class="fa-solid fa-house"></i>
+          <i className="fa-solid fa-house"></i>
         </span>
         <h3>Home</h3>
-      </a>
+      </Link>
       <Notifications />
-      <Link to="messenger" className="menu-item" id="messages-notofications">
-        <span class="position-relative ">
-          <i class="fa-regular fa-envelope"></i>
-
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger badge-sm">
+      <Link
+        to="messenger"
+        className={`menu-item ${
+          activeMenuItem === "messages" ? "active" : ""
+        }`}
+        id="messages-notofications"
+        onClick={() => handleMenuItemClick("messages")}
+      >
+        <span className="position-relative ">
+          <i className="fa-regular fa-envelope"></i>
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger badge-sm">
             7+
-            <span class="visually-hidden">unread messages</span>
+            <span className="visually-hidden">unread messages</span>
           </span>
         </span>
         <h3>Messages</h3>
       </Link>
-      <a href="" className="menu-item">
+      <Link
+        to="/main"
+        className={`menu-item ${
+          activeMenuItem === "bookmarks" ? "active" : ""
+        }`}
+        onClick={() => handleMenuItemClick("bookmarks")}
+      >
         <span>
-          <i class="fa-regular fa-bookmark"></i>
+          <i className="fa-regular fa-bookmark"></i>
         </span>
         <h3>Bookmarks</h3>
-      </a>
+      </Link>
       <FriendRequests />
-      <a href="" className="menu-item">
+      <Link
+        to="/main"
+        className={`menu-item ${activeMenuItem === "settings" ? "active" : ""}`}
+        onClick={() => handleMenuItemClick("settings")}
+      >
         <span>
-          <i class="fa-solid fa-gear"></i>
+          <i className="fa-solid fa-gear"></i>
         </span>
         <h3>Settings</h3>
-      </a>
+      </Link>
     </div>
   );
 }

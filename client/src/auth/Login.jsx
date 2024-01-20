@@ -16,10 +16,11 @@ function Login() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [, setCookie, ] = useCookies(["authToken"]);
+  const [, setCookie, removeCookie] = useCookies(["authToken"]);
   const onSubmit = async (values, actions) => {
     try {
       const response = await authService.login(values);
+      removeCookie("authToken");
       const token = await response.token;
       setCookie("authToken", token);
       await new Promise((resolve) => setTimeout(resolve, 1000));

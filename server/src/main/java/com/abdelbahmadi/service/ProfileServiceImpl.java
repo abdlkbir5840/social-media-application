@@ -1,6 +1,7 @@
 package com.abdelbahmadi.service;
 
 import com.abdelbahmadi.authentication.JwtProvider;
+import com.abdelbahmadi.exception.AccessDeniedException;
 import com.abdelbahmadi.exception.EntityNotFoundException;
 import com.abdelbahmadi.mapper.ApplicationMapper;
 import com.abdelbahmadi.models.Profile;
@@ -13,29 +14,32 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl  implements  ProfileService{
     private  final ProfileRepository profileRepository;
-    private  final PostService postService;
     private  final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final ApplicationMapper  applicationMapper;
     @Override
-    public Profile createProfile(RegisterRequest registerRequest) {
-        Profile profile = modelMapper.map(registerRequest, Profile.class);
-        return profileRepository.save(profile);
+    public ProfileDTO editProfile(ProfileDTO profileDTO,  Integer profileId, Integer userId){
+        if(!Objects.equals(userId, profileDTO.getUserId()))
+            throw new AccessDeniedException("Access Denied: You do not have the right to modify other users' profile");
+        Profile existingprofile = profileRepository.findById(profileId).orElseThrow(()
+                ->new EntityNotFoundException("Profile with ID "+profileId+"not found"));
+        modelMapper.map(profileDTO, existingprofile);
+        existingprofile.setId(profileId);
+        Profile updated = profileRepository.save(existingprofile);
+        return modelMapper.map(updated, ProfileDTO.class) ;
     }
 
     @Override
-    public ProfileResponse getProfile(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("User with ID "+id+" not found"));
-        return ProfileResponse.builder()
-                .profileDTO(applicationMapper.toProfileDTO(user))
-                .postDTOList(postService.findPostByUserId(id))
-                .build();
+    public ProfileDTO getProfile(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new EntityNotFoundException("User with ID "+userId+" not found"));
+        return applicationMapper.toProfileDTO(user);
     }
 
     @Override
@@ -50,7 +54,6 @@ public class ProfileServiceImpl  implements  ProfileService{
     }
     @Override
     public List<Profile> searchUser(String query) {
-        List<Profile>  profiles = profileRepository.searchUser(query);
-        return profiles;
+        return  profileRepository.searchUser(query);
     }
 }

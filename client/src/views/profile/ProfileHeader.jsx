@@ -1,7 +1,29 @@
 import React from "react";
 import EditeProfile from "./EditeProfile";
 
-function ProfileHeader() {
+function ProfileHeader({ userProfile , currentUserId }) {
+  
+  const {
+    id,
+    userId,
+    firstName,
+    lastName,
+    telephone,
+    address,
+    gender,
+    country,
+    city,
+    coverImg,
+    profileImg,
+    birthday,
+    bio,
+  } = userProfile;
+  const profileImgSrc = userProfile?.profileImg
+    ? `/assets/images/${profileImg}`
+    : "/assets/images/social logo.png";
+  const coverImgSrc = userProfile?.coverImg
+    ? `/assets/images/${coverImg}`
+    : "/assets/images/4912139.jpg";
   return (
     <div className="row">
       <div className="col-12 grid-margin">
@@ -10,7 +32,7 @@ function ProfileHeader() {
             <div className="gray-shade"></div>
             <figure>
               <img
-                src="/assets/images/feed-1.jpg"
+                src={coverImgSrc}
                 className="img-fluid"
                 alt="profile cover"
               />
@@ -19,10 +41,10 @@ function ProfileHeader() {
               <div>
                 <img
                   className="profile-pic"
-                  src="/assets/images/profile-1.jpg"
+                  src={profileImgSrc}
                   alt="profile"
                 />
-                <span className="profile-name">Amiah Burton</span>
+                <span className="profile-name">{firstName} {lastName}</span>
               </div>
             </div>
           </div>
@@ -47,8 +69,8 @@ function ProfileHeader() {
                 </a>
               </li>
             </ul>
-            <div classNameName="edit-profile">
-              <EditeProfile />
+            <div className="edit-profile">
+              {currentUserId===userId && <EditeProfile userProfile={userProfile} currentUserId={currentUserId} />}
             </div>
           </div>
         </div>

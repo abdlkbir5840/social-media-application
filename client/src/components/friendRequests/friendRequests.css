@@ -10,7 +10,6 @@
     z-index: 8;
     height: 20rem;
     overflow-y: auto;
-    display: none;
   }
   .left .friend-requests::before {
     content: "";
