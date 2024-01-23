@@ -27,14 +27,15 @@ public class ProfileServiceImpl  implements  ProfileService{
     public ProfileDTO editProfile(ProfileDTO profileDTO,  Integer profileId, Integer userId){
         if(!Objects.equals(userId, profileDTO.getUserId()))
             throw new AccessDeniedException("Access Denied: You do not have the right to modify other users' profile");
-        Profile existingprofile = profileRepository.findById(profileId).orElseThrow(()
-                ->new EntityNotFoundException("Profile with ID "+profileId+"not found"));
+        User user = userRepository.findById(userId).orElseThrow(()
+                ->new EntityNotFoundException("User with ID "+userId+"not found"));
+        Profile existingprofile = user.getProfile();
         modelMapper.map(profileDTO, existingprofile);
         existingprofile.setId(profileId);
-        Profile updated = profileRepository.save(existingprofile);
-        return modelMapper.map(updated, ProfileDTO.class) ;
+        Profile updatedProfile = profileRepository.save(existingprofile);
+        user.setProfile(updatedProfile);
+        return applicationMapper.toProfileDTO( user) ;
     }
-
     @Override
     public ProfileDTO getProfile(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(()

@@ -11,13 +11,9 @@ export const profileService = {
     }
   },
   editProfile: async ({profileDto, profileId, currentUserId}) => {
-    console.log(profileDto)
-    console.log(profileId)
-    console.log(currentUserId)
     try {
       const response = await instance.put(`${PROFILE_URL}/${profileId}/${currentUserId}`, profileDto);
-      // return response.data;
-      console.log(response.data)
+      return response.data;
     } catch (error) {
       console.log(error);
     }

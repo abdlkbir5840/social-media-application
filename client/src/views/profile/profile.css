@@ -130,62 +130,33 @@
   }
 }
 
-.panel-activity {
-  border: 1px solid #ddd;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
+.intro-section {
   margin-top: 15px;
+  background-color: #ffffff;
+  padding: 20px;
+  padding-bottom: 1px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.panel-activity textarea {
-  width: 100%;
-  border: none;
-  outline: none;
-  resize: vertical;
-  padding: 10px;
-  border-radius: 5px;
+.intro-section h2 {
+  font-size: 18px;
   margin-bottom: 10px;
 }
-.panel-activity .actions {
+
+.intro-section p {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.panel-activity .btn-group {
-  display: flex;
+.intro-section p svg {
+  margin-right: 8px;
+  /* color: var(--color-primary); */
 }
-
-.panel-activity .btn-group button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  margin-right: 10px;
-  font-size: 18px;
-  color: #333;
+.intro-section h2 {
+  font-weight: bold;
 }
-
-.panel-activity .btn-group button:hover {
-  color: #007bff;
-}
-
-.panel-activity .btn-group button i {
+.intro-section strong {
   margin-right: 5px;
 }
 
-.panel-activity button.btn-info {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 20px;
-  cursor: pointer;
-}
-
-.panel-activity button.btn-info:hover {
-  background-color: #0056b3;
-}
-.hidden {
-  display: none;
-}

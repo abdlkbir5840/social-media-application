@@ -3,6 +3,7 @@ import "./menuSection.css";
 import Notifications from "../notifications/Notifications";
 import FriendRequests from "../friendRequests/FriendRequests";
 import { Link } from "react-router-dom";
+import { Badge } from "@mui/material";
 
 function MenuSection() {
   const [activeMenuItem, setActiveMenuItem] = useState("home"); // Initial active menu item
@@ -26,20 +27,16 @@ function MenuSection() {
       </Link>
       <Notifications />
       <Link
-        to="messenger"
+        to="/main/messenger"
         className={`menu-item ${
           activeMenuItem === "messages" ? "active" : ""
         }`}
         id="messages-notofications"
         onClick={() => handleMenuItemClick("messages")}
       >
-        <span className="position-relative ">
-          <i className="fa-regular fa-envelope"></i>
-          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger badge-sm">
-            7+
-            <span className="visually-hidden">unread messages</span>
-          </span>
-        </span>
+        <Badge color="error" badgeContent={7}>
+        <i className="fa-regular fa-envelope"></i>
+        </Badge>
         <h3>Messages</h3>
       </Link>
       <Link

@@ -5,6 +5,7 @@ import Messenger from "../views/messenger/Messenger";
 import RequireAuth from "../auth/RequireAuth";
 import MainLayout from "../layout/MainLayout";
 import Profile from "../views/profile/Profile";
+import CommonLayout from "../layout/CommonLayout ";
 const ProtectedRoutes = () => {
   return (
     <Routes>

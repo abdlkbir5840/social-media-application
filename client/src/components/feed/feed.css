@@ -39,7 +39,7 @@
  .liked-by {
   display: flex;
 }
- .liked-by span {
+  .liked-by span {
   width: 1.4rem;
   height: 1.4rem;
   display: block;

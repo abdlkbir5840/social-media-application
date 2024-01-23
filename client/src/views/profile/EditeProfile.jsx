@@ -1,10 +1,13 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { profileService } from "../../service/profile.service";
+import { useDispatch, useSelector } from "react-redux";
+import { editProfile, selectIsLoading } from "../../store/profile.slice";
 
 function EditeProfile({ userProfile, currentUserId }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
   const {
     id,
     userId,
@@ -19,14 +22,11 @@ function EditeProfile({ userProfile, currentUserId }) {
     profileImg,
     birthday,
     bio,
-  } = userProfile;
-  const onSubmit = async (values, actions) => {
-    const basePath = "C:\\fakepath\\";
-    const profileImg= values.profileImg?.replace(basePath, "");
-    const coverImg = values.coverImg?.replace(basePath, "");
-    const id = values.profileId;
-    const {
+  } = userProfile ?? {};
+  const initialValues = useMemo(
+    () => ({
       userId,
+      profileId: id,
       firstName,
       lastName,
       telephone,
@@ -34,10 +34,12 @@ function EditeProfile({ userProfile, currentUserId }) {
       country,
       city,
       gender,
+      profileImg: null,
+      coverImg: null,
       birthday,
       bio,
-    } = values;
-    const profileDto = {
+    }),
+    [
       userId,
       id,
       firstName,
@@ -47,31 +49,38 @@ function EditeProfile({ userProfile, currentUserId }) {
       country,
       city,
       gender,
-      profileImg,
-      coverImg,
       birthday,
       bio,
-    }
-    const profileId = userProfile.id
-    profileService.editProfile({profileDto, profileId, currentUserId})
+    ]
+  );
+  const onSubmit = async (values, actions) => {
+    actions.setSubmitting(false);
+    const basePath = "C:\\fakepath\\";
+    const profileImgValue = values.profileImg?.replace(basePath, "");
+    const coverImgValue = values.coverImg?.replace(basePath, "");
+
+    const profileDto = {
+      userId: values.userId,
+      id: values.profileId,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      telephone: values.telephone,
+      address: values.address,
+      country: values.country,
+      city: values.city,
+      gender: values.gender,
+      profileImg: profileImgValue,
+      coverImg: coverImgValue,
+      birthday: values.birthday,
+      bio: values.bio,
+    };
+
+    const profileId = userProfile.id;
+    dispatch(editProfile({ profileDto, profileId, currentUserId }));
   };
 
   const { values, isSubmitting, handleChange, handleSubmit } = useFormik({
-    initialValues: {
-      userId: userId,
-      profileId: id,
-      firstName: firstName,
-      lastName: lastName,
-      telephone: telephone,
-      address: address,
-      country: country,
-      city: city,
-      gender: gender,
-      profileImg: "" ,
-      coverImg: "",
-      birthday: birthday,
-      bio: bio,
-    },
+    initialValues,
     onSubmit,
   });
   return (
@@ -79,13 +88,13 @@ function EditeProfile({ userProfile, currentUserId }) {
       <span
         className="btn-outline-non btn-border-non"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#editProfileModal"
       >
         <i className="fa-solid fa-pen-to-square m-2"></i> Edit
       </span>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="editProfileModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -241,6 +250,7 @@ function EditeProfile({ userProfile, currentUserId }) {
                   <button
                     disabled={isSubmitting}
                     className="btn btn-primary"
+                    data-bs-dismiss="modal"
                     type="submit"
                   >
                     {t("SIGN.FORM.SUBMIT")}

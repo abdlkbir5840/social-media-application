@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Feed.css';
+import ImageAvatars from '../badgeAvatars/ImageAvatars';
+import { Avatar } from '@mui/material';
 
 function Feed() {
   const [feeds, setFeeds] = useState([
@@ -106,9 +108,7 @@ function Feed() {
         <div key={feed.id} className="feed">
           <div className="head">
             <div className="user">
-              <div className="profile-pictuer">
-                <img src={feed.user.profileImage} alt="profile" />
-              </div>
+              <ImageAvatars profileImage={feed.user.profileImage} />
               <div className="info">
                 <h3>{feed.user.name}</h3>
                 <small>{feed.location}</small>

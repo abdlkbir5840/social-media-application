@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, selectCurrentUser } from "../../store/auth.slice";
 import { BeatLoader } from "react-spinners";
+import ImageAvatars from "../badgeAvatars/ImageAvatars";
 function Header() {
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
@@ -20,7 +21,7 @@ function Header() {
   }, [dispatch]);
   const profileImgSrc = currentUser?.profileImg
     ? `/assets/images/${currentUser.profileImg}`
-    : "/assets/images/social logo.png";
+    : "/broken-image.jpg";
   if (currentUser === null) {
     return (
       <div
@@ -51,11 +52,10 @@ function Header() {
           </label>
           <div className="dropdown">
             <div
-              className="profile-pictuer"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img src={profileImgSrc} alt="profile" />
+              <ImageAvatars profileImage={profileImgSrc} />
             </div>
             {currentUser && (
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">

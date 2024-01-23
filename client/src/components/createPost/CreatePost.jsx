@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import "./profileSelection.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser, selectCurrentUser } from "../../store/auth.slice";
-import { Link } from "react-router-dom";
-import { BeatLoader } from "react-spinners";
-import ImageAvatars from "../badgeAvatars/ImageAvatars";
 
-function ProfileSection() {
+import { useDispatch, useSelector } from "react-redux";
+import "./createPost.css";
+import { getCurrentUser, selectCurrentUser } from "../../store/auth.slice";
+import ImageAvatars from "../badgeAvatars/ImageAvatars";
+import { BeatLoader } from "react-spinners";
+import { useEffect } from "react";
+function CreatePost({name}) {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);
@@ -17,25 +15,24 @@ function ProfileSection() {
   const profileImgSrc = currentUser?.profileImg
     ? `/assets/images/${currentUser.profileImg}`
     : "/broken-image.jpg";
-
   return (
     <>
-      {currentUser == undefined ||
+     {currentUser == undefined ||
         (currentUser === null && (
           <BeatLoader color="#36d7b7" className="spinner" />
         ))}
-
-      <Link to={`/main/profile/${currentUser?.userId}`} className="profile">
+      <form className="create-post">
         <ImageAvatars profileImage={profileImgSrc} />
-        <div className="handle">
-          <h6>
-            {currentUser?.firstName} {currentUser?.lastName}
-          </h6>
-          <p className="text-muted">@{currentUser?.firstName}</p>
-        </div>
-      </Link>
+        <input
+          type="text"
+          name=""
+          id="create-post"
+          placeholder={`What's on your mind, ${name}`}
+          disabled
+        />
+      </form>
     </>
   );
 }
 
-export default ProfileSection;
+export default CreatePost;

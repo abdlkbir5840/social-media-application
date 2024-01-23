@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./story.css";
+import ImageAvatars from "../badgeAvatars/ImageAvatars";
 
 function Story() {
   const [stories, setStories] = useState([
@@ -50,8 +51,9 @@ function Story() {
           style={{ background: `url(${story.storyImage}) no-repeat center center/cover` }}
         >
           <div className="profile-pictuer">
-            <img src={story.profileImage} alt="profile" />
+            <ImageAvatars profileImage={story.profileImage} />
           </div>
+          
           <p className="name">{story.name}</p>
         </div>
       ))}

@@ -1,0 +1,40 @@
+.chat-pop-up-header {
+  background: var(--color-primary);
+}
+
+.chat-pop-up-header .modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-pop-up-header .modal-title span {
+  font-weight: 300;
+  margin-left: 8px;
+}
+
+.chat-pop-up-header .chat-pop-actions {
+  display: inline-block;
+}
+.chat-pop-up-header .chat-pop-actions span {
+  margin: 5px;
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}
+.modal-footer {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.input-message {
+ /* border: 2px solid black; */
+ border-radius: 5px;
+ width: 65%;
+}
+.modal-footer .custom-btn{
+  border-radius: 0;
+}
