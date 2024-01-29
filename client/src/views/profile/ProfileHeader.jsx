@@ -2,6 +2,7 @@ import React from "react";
 import EditeProfile from "./EditeProfile";
 import { useSelector } from "react-redux";
 import { selectIsLoading } from "../../store/profile.slice";
+import { BeatLoader } from "react-spinners";
 
 function ProfileHeader({ userProfile, currentUserId }) {
   const isLoading = useSelector(selectIsLoading);

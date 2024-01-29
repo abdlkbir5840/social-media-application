@@ -16,3 +16,43 @@
     color: var(--color-dark);
     margin-right: 1rem;
   }
+  .create-post-input{
+    width: 100%;
+    background: var(--color-white);
+    padding: 0.4rem var(--card-padding);
+    border-radius: var(--border-radius);
+  }
+
+  .add-to-post{
+    width: 98%;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 2px 5px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .add-to-post .icons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .add-to-post .f-icon{
+    font-size: 25px;
+    cursor: pointer;
+  }
+  .add-to-post .f-icon:nth-child(1){
+    color: rgb(16, 179, 13);
+  }
+  .add-to-post .f-icon:nth-child(2){
+    color: rgb(246, 90, 13);
+  }
+  .add-to-post .f-icon:nth-child(3){
+    color: rgb(50, 110, 221);
+  }
+  .add-to-post .f-icon:hover{
+    color: hsl(252, 75%, 60%);
+  }

@@ -36,7 +36,9 @@ body {
   background: var(--color-light);
   overflow-x: hidden;
 }
-
+.custom-bg-primary{
+  background: var(--color-primary);
+}
 .custom-container {
   width: 80%;
   margin: auto;

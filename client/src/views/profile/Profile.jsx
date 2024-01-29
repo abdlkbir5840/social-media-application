@@ -14,18 +14,28 @@ import { BeatLoader } from "react-spinners";
 import { selectCurrentUser } from "../../store/auth.slice";
 import IntroSection from "./IntroSection ";
 import CreatePost from "../../components/createPost/CreatePost";
-
+import { getUserPosts, selectPosts } from "../../store/post.slice";
 
 const Profile = () => {
   const currentUser = useSelector(selectCurrentUser);
   const { id } = useParams();
   const profileInfo = useSelector(selectProfile);
+  const userPosts = useSelector(selectPosts);
   const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
+  const fetchData = async () => {
+    try {
+      await dispatch(getProfile(id))
+        .then(() => dispatch(getUserPosts(currentUser.userId)))
+        .catch((error) => console.error("Error fetching data:", error));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    dispatch(getProfile(id));
-  }, [dispatch, id]);
+    fetchData();
+  }, [id, currentUser?.userId]);
   return (
     <>
       {isLoading ||
@@ -51,8 +61,7 @@ const Profile = () => {
           {currentUser?.userId === profileInfo?.userId && (
             <CreatePost name={profileInfo?.firstName} />
           )}
-  
-          <Feed />
+          {userPosts && userPosts.length > 0 && <Feed posts={userPosts} />}
         </div>
       </div>
     </>

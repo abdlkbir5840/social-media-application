@@ -16,6 +16,7 @@ public class ApplicationMapper {
                 .email(user.getEmail())
                 .gender(user.getProfile().getGender())
                 .createdAt(user.getCreatedAt())
+                .profileImage(user.getProfile().getProfileImg())
                 .updatedAt(user.getUpdatedAt())
                 .build();
     }

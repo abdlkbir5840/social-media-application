@@ -8,7 +8,9 @@ import com.abdelbahmadi.models.User;
 import com.abdelbahmadi.repository.PostRepository;
 import com.abdelbahmadi.repository.UserRepository;
 import com.abdelbahmadi.response.PostDTO;
+import com.abdelbahmadi.response.PostRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
     private final ApplicationMapper applicationMapper;
     @Override
     public List<PostDTO> getAll() {
@@ -36,12 +39,11 @@ public class PostServiceImpl implements PostService{
                 .map(applicationMapper::toPostDto).collect(Collectors.toList());
     }
     @Override
-    public PostDTO createPost(PostDTO postDTO, Integer userId) throws EntityNotFoundException {
+    public PostDTO createPost(PostRequest postRequest, Integer userId) throws EntityNotFoundException {
         User user = userRepository.findById(userId).orElseThrow(()
                 ->new EntityNotFoundException("User with ID "+userId+" not found"));
         Post newPost = new Post();
-        newPost.setCaption(postDTO.getCaption());
-        newPost.setImage(postDTO.getImage());
+        modelMapper.map(postRequest, newPost);
         newPost.setUser(user);
         return applicationMapper.toPostDto(postRepository.save(newPost));
     }

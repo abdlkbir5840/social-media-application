@@ -24,6 +24,12 @@
   border-radius: var(--card-border-radius);
   overflow: hidden;
   margin: 0.7rem 0;
+  height: 400px;
+}
+.feed .photo img {
+  width: 100%; 
+  height: 400px; 
+  object-fit: cover; 
 }
  .feed .action-buttons {
   display: flex;
@@ -35,6 +41,20 @@
  .feed .interaction-buttons {
   display: flex;
   gap: 0.7rem;
+}
+.feed .interaction-buttons-comments{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.feed .interaction-buttons-comments span{
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 10px;
+  cursor: pointer;
 }
  .liked-by {
   display: flex;

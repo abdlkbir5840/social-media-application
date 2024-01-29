@@ -29,13 +29,13 @@ function Story() {
       name: "Ali Story",
     },
     {
-      id: 4,
+      id: 5,
       profileImage: "/assets/images/profile-6.jpg",
       storyImage: "/assets/images/story-5.jpg",
       name: "Ali Story",
     },
     {
-      id: 4,
+      id: 6,
       profileImage: "/assets/images/profile-7.jpg",
       storyImage: "/assets/images/story-6.jpg",
       name: "Ali Story",

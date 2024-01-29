@@ -2,6 +2,7 @@ package com.abdelbahmadi.controller;
 
 import com.abdelbahmadi.models.Post;
 import com.abdelbahmadi.response.PostDTO;
+import com.abdelbahmadi.response.PostRequest;
 import com.abdelbahmadi.response.UserDTO;
 import com.abdelbahmadi.service.PostService;
 import com.abdelbahmadi.service.UserService;
@@ -26,13 +27,14 @@ public class PostController {
         return  this.postService.findPostById(id);
     }
     @GetMapping("/userPosts/{id}")
-    public List<PostDTO> getPostsByUserId(@PathVariable Integer id){
+    public List<PostDTO> getPostsByUserId(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer id){
+        UserDTO user = userService.findUserByJwt(bearerToken);
         return  this.postService.findPostByUserId(id);
     }
     @PostMapping
-    public PostDTO createPost(@RequestHeader("Authorization") String bearerToken, @RequestBody PostDTO postDTO){
+    public PostDTO createPost(@RequestHeader("Authorization") String bearerToken, @RequestBody PostRequest postRequest){
         UserDTO user = userService.findUserByJwt(bearerToken);
-        return  this.postService.createPost(postDTO, user.getId());
+        return  this.postService.createPost(postRequest, user.getId());
     }
     @PutMapping("/{postId}")
     public PostDTO updatePost(@RequestHeader("Authorization") String bearerToken, @RequestBody PostDTO postDTO, @PathVariable Integer postId){

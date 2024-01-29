@@ -1,7 +1,7 @@
 .profile-container {
   top: 5.4rem;
   display: grid;
-  grid-template-columns: 18vw auto 10vw;
+  grid-template-columns: 18vw auto 20vw;
   column-gap: 2rem;
   position: relative;
 }

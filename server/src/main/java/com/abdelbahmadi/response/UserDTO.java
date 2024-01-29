@@ -14,6 +14,7 @@ public class UserDTO {
     private  String lastName;
     private  String email;
     private  String gender;
+    private String profileImage;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
